@@ -2,10 +2,19 @@
 	import { spring } from 'svelte/motion';
 
 	let count = 0;
+  let values;
 
 	const displayed_count = spring();
 	$: displayed_count.set(count);
 	$: offset = modulo($displayed_count, 1);
+  $: double = count * 2;
+  $: {
+    const data = [];
+    for (let i = 0; i < double; i++) {
+      data[i] = Math.floor(Math.random() * 10);
+    }
+    values = data;
+  }
 
 	/**
 	 * @param {number} n
@@ -37,6 +46,12 @@
 		</svg>
 	</button>
 </div>
+
+{#each values as value}
+  <div class:even={value % 2 === 0} class="svelte-xxx">
+    {value}
+  </div>
+{/each}
 
 <style>
 	.counter {
